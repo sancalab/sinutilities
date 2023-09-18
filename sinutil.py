@@ -1,5 +1,8 @@
 import base64
 import platform
+import os
+import subprocess
+import datetime
 
 print(".---------------.")
 print("| _   _   _   _ |")
@@ -102,6 +105,43 @@ while True:
         ####        
             """
             print(ascii_unknown)
+    elif command == "clear":
+        os.system('clear' if os.name == 'posix' else 'cls')
+    elif command == "date":
+        print(datetime.datetime.now())
+    elif command == "exit" or command == "quit":
+        break
+    elif command == "ping":
+        host = input("Enter the host: ")
+        try:
+            # Using subprocess to ensure cross-platform compatibility
+            result = subprocess.run(["ping", "-c 4", host], stdout=subprocess.PIPE, text=True)
+            print(result.stdout)
+        except Exception as e:
+            print("Error:", str(e))
+    elif command == "nslookup":
+        domain = input("Enter the domain: ")
+        try:
+            result = subprocess.run(["nslookup", domain], stdout=subprocess.PIPE, text=True)
+            print(result.stdout)
+        except Exception as e:
+            print("Error:", str(e))
+    elif command == "help" or command == "?":
+        print("""
+mewo     - Just for fun.
+calc     - Calculate mathematical expressions.
+base64enc - Encode a string in Base64.
+base64dec - Decode a Base64 string.
+osfetch  - Display an ASCII representation of the current OS.
+clear    - Clear the terminal screen.
+date     - Display the current date and time.
+ping     - Send ICMP echo requests.
+nslookup - Lookup DNS information.
+exit/quit - Terminate the program.
+""")
+
+    
+    
     else:
         print("""
       ########      
@@ -116,4 +156,3 @@ while True:
         ####        
         ####        
         """)
-
